@@ -108,6 +108,7 @@ final class AzureBlobStorageAdapter extends BaseAzureBlobStorageAdapter
      */
     public function getTemporaryUrl(string $path, $ttl, array $options = [])
     {
+        $basePath = $path;
         $path = $this->prefix ? $this->prefix . '/' . $path : $path;
         $resourceName = (empty($path) ? $this->container : $this->container  . '/' . $path);
         if (!$this->key) {
@@ -130,6 +131,6 @@ final class AzureBlobStorageAdapter extends BaseAzureBlobStorageAdapter
             (string)Arr::get($options, 'content_type', '')
         );
 
-        return sprintf('%s?%s', $this->getUrl($path), $sasString);
+        return sprintf('%s?%s', $this->getUrl($basePath), $sasString);
     }
 }
